@@ -1,19 +1,22 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 const Card = (props) => {
-  const {
-    _id,
-    title,
-    author,
-    content,
-    comment,
-    handleDeleteList,
-    handleAddComment,
-    user,
-    setUser,
-    text,
-    setText,
-  } = props;
+  const [user, setUser] = useState("");
+  const [text, setText] = useState("");
+  const { _id, title, author, content, comment, handleDeleteList } = props;
+
+  const handleAddComment = async (id) => {
+    const data = { user, text };
+
+    try {
+      await axios.post(`/api/comment/${id}`, data);
+      setUser("");
+      setText("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex flex-col gap-3 px-4 py-4  relative shadow-md rounded border">
       <div className="flex flex-col gap-0">

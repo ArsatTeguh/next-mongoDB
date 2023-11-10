@@ -10,8 +10,6 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
-  const [user, setUser] = useState("");
-  const [text, setText] = useState("");
 
   const handleGetAllList = async () => {
     try {
@@ -39,18 +37,6 @@ export default function Home() {
     try {
       await axios.delete(`/api/article/${id}`);
       alert("delete success");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddComment = async (id) => {
-    const data = { user, text };
-
-    try {
-      await axios.post(`/api/comment/${id}`, data);
-      setUser("");
-      setText("");
     } catch (error) {
       console.log(error);
     }
@@ -108,18 +94,9 @@ export default function Home() {
       </form>
       <br />
       <br />
-      <div className="w-1/2">
+      <div className="w-1/2 flex flex-col gap-4">
         {list?.map((item, index) => (
-          <Card
-            key={index}
-            {...item}
-            handleDeleteList={handleDeleteList}
-            handleAddComment={handleAddComment}
-            user={user}
-            setUser={setUser}
-            text={text}
-            setText={setText}
-          />
+          <Card key={index} {...item} handleDeleteList={handleDeleteList} />
         ))}
       </div>
     </main>
